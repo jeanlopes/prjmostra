@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition>
+        <div class="form-group">
+            <label for="curso" class="col-sm-2 control-label">Curso</label>
+            <div class="col-sm-8">
+                <h:selectOneMenu class="form-control" required="true" id="curso" value="#{applicationScope[nameBean].cursoList }">
+                    <f:selectItem itemValue="" itemLabel="Selecione..." />
+                </h:selectOneMenu>
+            <br />
+            <button class="btn btn-danger" type="button">Cadastrar outro curso...</button>
+        </div>
+    </div>
+
+</ui:composition>
+</html>
+

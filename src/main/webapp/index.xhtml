@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	>
+        
+<ui:composition template="/shared/Layout.xhtml">
+	<ui:define name="body">
+	  <!-- Menu -->
+          
+            <nav class="navbar navbar-default" role="navigation">
+                <div class="container-fluid">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                    </div>
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav pull-right">
+                            <!--    Menu Inscrições  -->
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Inscrições <span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+
+                                    <c:if test="#{homeController.etapaInscricaoAutor == true}" >
+                                        <li><a data="autor" href="#" data-toggle="modal" data-target="#modalVerificarCPF">Autor</a></li>
+                                    </c:if>
+
+                                    <c:if test="#{homeController.etapaInscricaoOrientador == true}">
+                                        <li><a data="orientador" href="#" data-toggle="modal" data-target="#modalVerificarCPF">Orientador</a></li>
+                                    </c:if>
+
+                                    <!--
+                                    <li><a data="avaliador" href="#" data-toggle="modal" data-target="#modalVerificarCPF">Avaliador</a></li>
+                                    <li><a data="ouvinte" href="#" data-toggle="modal" data-target="#modalVerificarCPF">Ouvinte</a></li>
+                                    <li><a data="voluntario" href="#" data-toggle="modal" data-target="#modalVerificarCPF" >Voluntário</a></li>
+                                    -->
+                                </ul>
+                            </li>
+                            <!--   Menu Login  -->
+                            <li><a href="#" data-toggle="modal" data-target="#modalLogin">Login</a></li>
+                        </ul>
+                    </div><!-- /.navbar-collapse -->
+                </div><!-- /.container-fluid -->
+            </nav>
+
+          <ui:include src="/login.xhtml" />
+          <ui:include src="/verificar_cpf.xhtml"/>
+
+            <script type="text/javascript" src="#{request.contextPath}/content/home.js"></script>
+	</ui:define>
+</ui:composition>
+
+</html>
