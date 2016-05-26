@@ -6,8 +6,15 @@
 package br.edu.ifrs.mostra.daos;
 
 import br.edu.ifrs.mostra.models.Curso;
+import br.edu.ifrs.mostra.utils.ViolationLogger;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.persistence.EntityTransaction;
+import javax.persistence.PersistenceException;
+import javax.persistence.QueryTimeoutException;
+import javax.persistence.TransactionRequiredException;
+import javax.validation.ConstraintViolationException;
 
 /**
  *
@@ -15,18 +22,18 @@ import java.util.logging.Logger;
  */
 public class CursoDao implements Dao<Curso> {
 
-    private DBContext context = DBContext.getInstance();
+    private final DBContext context = DBContext.getInstance();
     private static final Logger log = Logger.getLogger(CursoDao.class.getName());
-    
+
     @Override
     public List<Curso> listAll() {
-        
+
         return this.context.curso().toList();
     }
-    
+
     public List<Curso> findAllByCampusId(int idCampus) {
         return this.context.curso().where(c -> c.getFkCampus() == idCampus).toList();
-    } 
+    }
 
     @Override
     public List<Curso> findById(int id) {
@@ -35,15 +42,36 @@ public class CursoDao implements Dao<Curso> {
 
     @Override
     public Curso findOneById(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+        //try {
+            Curso curso = this.context.curso().where(c -> c.getIdCurso() == id).getOnlyValue();
+
+            return curso;
+
+        //} 
+
+        //return null;
     }
 
     @Override
     public Curso save(Curso entity) {
-        
-        this.context.em.persist(entity);
-        this.context.em.flush();
-        
+        EntityTransaction tx = context.em.getTransaction();
+        tx.begin();
+
+        try {
+            this.context.em.persist(entity);
+            tx.commit();
+        } catch (IllegalStateException | TransactionRequiredException | QueryTimeoutException e) {
+            tx.rollback();
+            log.log(Level.SEVERE, "nao foi possivel cadastrar o curso", e);
+
+        } catch (PersistenceException e) {
+            tx.rollback();
+            ViolationLogger.log(e, log);
+
+            log.log(Level.SEVERE, "nao foi possivel cadastrar o curso", e);
+        }
+
         return entity;
     }
 
@@ -56,5 +84,5 @@ public class CursoDao implements Dao<Curso> {
     public Curso update(Curso entity) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
 }

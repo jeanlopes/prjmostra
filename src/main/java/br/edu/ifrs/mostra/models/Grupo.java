@@ -33,11 +33,11 @@ public class Grupo implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
+    @NotNull(message = "cpf nao pode ser null na tabela Grupo")
+    @Size(min = 1, max = 255, message = "tamanho nao permitido para o campo cpf na tabela grupo")
     @Column(name = "cpf")
     private String cpf;
-    @Size(max = 255)
+    @Size(max = 255, message = "tamanho nao permitido para o campo nome na tabela grupo")
     @Column(name = "nome")
     private String nome;
 

@@ -53,12 +53,12 @@ public class ParecerTrabalho implements Serializable {
     @EmbeddedId
     protected ParecerTrabalhoPK parecerTrabalhoPK;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message = "datahora nao pode ser null na tabela ParecerTrabalho")
     @Column(name = "datahora")
     @Temporal(TemporalType.TIMESTAMP)
     private Date datahora;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message = "status nao pode ser null na tabela ParecerTrabalho")
     @Column(name = "status")
     private int status;
     @Column(name = "status_introducao")
@@ -69,24 +69,24 @@ public class ParecerTrabalho implements Serializable {
     private Integer statusMetodologia;
     @Column(name = "status_resultados")
     private Integer statusResultados;
-    @Size(max = 255)
+    @Size(max = 255, message = "tamanho nao permitido para o campo observacoes na tabela parecer_trabalho")
     @Column(name = "observacoes")
     private String observacoes;
-    @Size(max = 255)
+    @Size(max = 255, message = "tamanho nao permitido para o campo observacoes_internas na tabela parecer_trabalho")
     @Column(name = "observacoes_internas")
     private String observacoesInternas;
     @Column(name = "autor_ciente")
     private Integer autorCiente;
-    @Size(max = 255)
+    @Size(max = 255, message = "tamanho nao permitido para o campo obs_introducao na tabela parecer_trabalho")
     @Column(name = "obs_introducao")
     private String obsIntroducao;
-    @Size(max = 255)
+    @Size(max = 255, message = "tamanho nao permitido para o campo obs_objetivos na tabela parecer_trabalho")
     @Column(name = "obs_objetivos")
     private String obsObjetivos;
-    @Size(max = 255)
+    @Size(max = 255, message = "tamanho nao permitido para o campo obs_metodologia na tabela parecer_trabalho")
     @Column(name = "obs_metodologia")
     private String obsMetodologia;
-    @Size(max = 255)
+    @Size(max = 255, message = "tamanho nao permitido para o campo obs_resultados na tabela parecer_trabalho")
     @Column(name = "obs_resultados")
     private String obsResultados;
     @JoinColumn(name = "fk_revisor", referencedColumnName = "fk_usuario", insertable = false, updatable = false)

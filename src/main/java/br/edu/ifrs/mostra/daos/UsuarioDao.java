@@ -6,10 +6,12 @@
 package br.edu.ifrs.mostra.daos;
 
 import br.edu.ifrs.mostra.models.Usuario;
+import br.edu.ifrs.mostra.utils.ViolationLogger;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.persistence.PersistenceException;
 
 /**
  *
@@ -19,6 +21,19 @@ public class UsuarioDao implements Dao<Usuario> {
 
     private final DBContext context = DBContext.getInstance();
     private static final Logger log = Logger.getLogger(UsuarioDao.class.getName());
+    
+    public Usuario findUserByCpf (String cpf) {
+        
+        try {
+            Optional<Usuario> user = this.context.usuario().where(u -> u.getCpf().equals(cpf)).findOne();
+            
+            return user.orElse(null);
+        } catch (Exception e) {
+            log.log(Level.SEVERE, "nao foi possivel recuperar o usuario pelo cpf", e);
+        }
+        
+        return null;
+    }
     
     public boolean hasUserByCPF(String cpf) {
         
@@ -51,7 +66,17 @@ public class UsuarioDao implements Dao<Usuario> {
 
     @Override
     public Usuario save(Usuario entity) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+        
+            this.context.em.persist(entity);
+        } catch (PersistenceException e) {
+            
+            ViolationLogger.log(e, log);
+            log.log(Level.SEVERE, "nao foi possivel cadastrar o usuario no banco", e);
+        }
+        
+        return entity;
     }
 
     @Override

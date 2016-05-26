@@ -5,16 +5,49 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:composition>
-        <div class="form-group">
-            <label for="campus" class="col-sm-2 control-label">Campus</label>
-            <div class="col-sm-8">
-                <h:selectOneMenu required="true" class="form-control" id="campus" value="#{applicationScope[nameBean].campusList }">
-                    <f:selectItem itemValue="" itemLabel="Selecione..." />
-                </h:selectOneMenu>
-                <br />
-                <button class="btn btn-danger" type="button">Cadastrar outro campus...</button>
+
+        <!-- Modal Escolher Campus -->
+        <div class="modal fade" id="modalEscolherCampus" tabindex="-1" role="dialog" aria-labelledby="modalEscolherCampusLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <h:form>
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">
+                                <span aria-hidden="true">&times;</span>
+                                <span class="sr-only">×</span>
+                            </button>
+                            <h3 class="modal-title" id="modalLoginLabel">Escolher Campus</h3>
+                        </div>
+                        <div class="modal-body">
+                            <p class="css_mostra2015_texto_modal">Certifique-se de que seu campus não consta na lista abaixo antes de cadastrar um novo campus.</p>
+
+                            <p class="css_mostra2015_texto_modal">Se o campus estiver na lista, selecione o mesmo e clique em 'Escolher'.</p>
+
+                            <p class="css_mostra2015_texto_modal">Se o campus não estiver na lista, clique em 'Cadastrar Novo Campus ...'</p>
+                            <p>
+                                <label for="escolher_campus" class="col-sm-2 control-label">Campus</label>
+
+                                <h:selectOneMenu required="true" class="form-control escolher_campus" id="escolher_campus">
+                                    <f:selectItem itemValue="" itemLabel="Selecione..." />
+                                </h:selectOneMenu>
+                            </p>     
+
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">
+                                Escolher
+                            </button>
+
+                            <button data-toggle="modal" data-target="#modalCadastrarCampus" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">
+                                Cadastrar novo campus
+                            </button>
+
+                        </div>
+                    </h:form>
+                </div>
             </div>
         </div>
+
     </ui:composition>
 </html>
 

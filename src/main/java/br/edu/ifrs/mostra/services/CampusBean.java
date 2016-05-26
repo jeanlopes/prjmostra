@@ -7,11 +7,14 @@ package br.edu.ifrs.mostra.services;
 
 import br.edu.ifrs.mostra.daos.CampusDao;
 import br.edu.ifrs.mostra.daos.InstituicaoDao;
-import br.edu.ifrs.mostra.models.Campus;
+import br.edu.ifrs.mostra.dto.Campus;
 import br.edu.ifrs.mostra.models.Instituicao;
+import com.google.gson.Gson;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -20,12 +23,14 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 /**
+ * REST Web Service
  *
  * @author jean
  */
 @Stateless
 @Path("/campus")
 public class CampusBean {
+    
 
     @Inject 
     private CampusDao dao;
@@ -36,18 +41,34 @@ public class CampusBean {
     @GET
     @Path("/get_campus_list/{id_instituicao}")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Campus> listAll(@PathParam("id_instituicao") int idInst ) {
-        return dao.findAllByInstituicaoId(idInst);
+    public String listAll(@PathParam("id_instituicao") int idInst ) {
+        
+        List<br.edu.ifrs.mostra.models.Campus> campusList = dao.findAllByInstituicaoId(idInst);
+        
+        List<Campus> campusDtoList = new ArrayList<>(campusList.size());
+        campusList.stream().forEach((campus) -> { 
+        
+            Campus campusDto = new Campus();
+            campusDto.setIdCampus(campus.getIdCampus());
+            campusDto.setCidade(campus.getCidade());
+            campusDto.setNome(campus.getNome());
+            campusDto.setFkInstituicao(campus.getFkInstituicao().getIdInstituicao());
+            
+            campusDtoList.add(campusDto);
+        });
+        Gson gson = new Gson();
+        String jsonList = gson.toJson(campusDtoList);
+        return jsonList;
     }
     
     @POST
     @Path("/create")
     @Produces(MediaType.APPLICATION_JSON)
-    public Campus create(@PathParam("nome") String nome, 
-                         @PathParam("cidade") String cidade, 
-                         @PathParam("insituicao") int instituicao) {
+    public String create(@FormParam("nome") String nome, 
+                         @FormParam("cidade") String cidade, 
+                         @FormParam("instituicao") int instituicao) {
         
-        Campus campus = new Campus();
+        br.edu.ifrs.mostra.models.Campus campus = new br.edu.ifrs.mostra.models.Campus();
         campus.setNome(nome);
         campus.setCidade(cidade);
         
@@ -55,7 +76,15 @@ public class CampusBean {
         campus.setFkInstituicao(inst);
         
         campus = dao.save(campus);
+        Campus campusDto = new Campus();
+        campusDto.setIdCampus(campus.getIdCampus());
+        campusDto.setNome(campus.getNome());
+        campusDto.setCidade(campus.getCidade());
+        campusDto.setFkInstituicao(campus.getFkInstituicao().getIdInstituicao());
         
-        return campus;
+        Gson gson = new Gson();
+        String campusJson = gson.toJson(campusDto);
+        
+        return campusJson;
     }
 }

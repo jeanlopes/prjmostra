@@ -44,7 +44,7 @@ public class Voluntario implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message = "fk_usuario nao pode ser null na tabela")
     @Column(name = "fk_usuario")
     private Integer fkUsuario;
     @Size(max = 200)

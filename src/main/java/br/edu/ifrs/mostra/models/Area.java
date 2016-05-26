@@ -45,8 +45,8 @@ public class Area implements Serializable {
     @Column(name = "id_area")
     private Integer idArea;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
+    @NotNull(message = "nome da area nao pode ser nulo")
+    @Size(min = 1, max = 255, message = "tamanho nao permitido para o campo nome na tabela area")
     @Column(name = "nome")
     private String nome;
     @JoinTable(name = "avaliador_area", joinColumns = {

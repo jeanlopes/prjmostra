@@ -57,49 +57,49 @@ public class Sessao implements Serializable {
     @Column(name = "id_sessao")
     private Integer idSessao;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message = "numero nao pode ser null na tabela sessao")
     @Column(name = "numero")
     private int numero;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
+    @NotNull(message = "nome nao pode ser null na tabela sessao")
+    @Size(min = 1, max = 255, message = "tamanho nao permitido para o campo nome na tabela sessao")
     @Column(name = "nome")
     private String nome;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message = "sala nao pode ser null na tabela sessao")
     @Column(name = "sala")
     private int sala;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
+    @NotNull(message = "nome_sala nao pode ser null na tabela sessao")
+    @Size(min = 1, max = 255, message = "tamanho nao permitido para o campo nome_sala na tabela sessao")
     @Column(name = "nome_sala")
     private String nomeSala;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message = "andar nao pode ser null na tabela sessao")
     @Column(name = "andar")
     private int andar;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
+    @NotNull(message = "nome_andar nao pode ser null na tabela sessao")
+    @Size(min = 1, max = 255, message = "tamanho nao permitido para o campo nome_andar na tabela sessao")
     @Column(name = "nome_andar")
     private String nomeAndar;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message = "data nao pode ser null na tabela sessao")
     @Column(name = "data")
     @Temporal(TemporalType.DATE)
     private Date data;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message = "hora_ini nao pode ser null na tabela sessao")
     @Column(name = "hora_ini")
     @Temporal(TemporalType.TIME)
     private Date horaIni;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message = "hora_fim nao pode ser null na tabela sessao")
     @Column(name = "hora_fim")
     @Temporal(TemporalType.TIME)
     private Date horaFim;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message = "status nao pode ser null na tabela sessao")
     @Column(name = "status")
     private int status;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "sessao")

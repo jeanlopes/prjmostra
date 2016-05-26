@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:composition>
         <!-- Modal Cadastrar instituição -->
 
@@ -15,21 +16,22 @@
         <div class="modal fade" id="modalCadastrarInstituicao" tabindex="-1" role="dialog" aria-labelledby="modalCadastrarInstituicaoLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">
-                            <span aria-hidden="true">&times;</span>
-                            <span class="sr-only">×</span>
-                        </button>
-                        <h3 class="modal-title" id="modalCadastrarInstituicaoLabel">Cadastrar Instituição</h3>
-                    </div>
-                    <div class="modal-body">
-                        <form id="cadastrarInstituicaoForm"  class="form-search" autocomplete="off">
+                    <h:form id="cadastrarInstituicaoForm"  class="form-search" >
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">
+                                <span aria-hidden="true">&times;</span>
+                                <span class="sr-only">×</span>
+                            </button>
+                            <h3 class="modal-title" id="modalCadastrarInstituicaoLabel">Cadastrar Instituição</h3>
+                        </div>
+                        <div class="modal-body">
+
                             <p class="css_mostra2015_texto_modal">
                                 ATENÇÃO: Somente cadastre uma nova Instituição se ela ainda não estiver cadastrada.
                             </p>
                             <div class="form-group">
                                 <label for="nome">Nome (somente o nome geral da instituição, não coloque o nome do campus, unidade ou departamento)</label>
-                                <input type="text" autofocus class="form-control" name="nome" maxlength="80"/>
+                                <input type="text" autofocus="autofocus" class="form-control" name="nome" maxlength="80"/>
                             </div>
 
                             <div class="form-group">
@@ -53,35 +55,34 @@
                                 <input type="text" class="form-control" name="site" maxlength="50" />
                             </div>
 
-
                             <div class="form-group">
-                                <label for="sigla">Tipo</label>
-                                <select class="form-control" name="tipo">
-                                    <option value="0">Selecione uma opcao</option>
-                                    <option value="1">Instituto Federal</option>
-                                    <option value="2">Escola Técnica</option>
-                                    <option value="3">Instituição de Ensino Superior</option>
-                                    <option value="4">Empresa</option>
-                                    <option value="5">Outro tipo</option>
-                                </select>
+                                <label for="Tipo">Tipo</label>
+                                <h:selectOneMenu required="true" class="form-control" id="tipo">
+                                    <f:selectItem itemValue="0" itemLabel="Selecione uma opcao" />
+                                    <f:selectItem itemValue="1" itemLabel="Instituto Federal" />
+                                    <f:selectItem itemValue="2" itemLabel="Escola Técnica" />
+                                    <f:selectItem itemValue="3" itemLabel="Instituição de Ensino Superior" />
+                                    <f:selectItem itemValue="4" itemLabel="Empresa" />
+                                    <f:selectItem itemValue="5" itemLabel="Outro tipo" />
+                                </h:selectOneMenu>
                             </div>
-                        </form>
 
-                    </div>
-                    <div class="modal-footer">
+                        </div>
+                        <div class="modal-footer" aria-hidden="true">
 
-                        <button class="btn btn-default" type="reset" form="cadastrarInstituicaoForm">
-                            Limpar
-                        </button>
-                        <button type="submit" class="btn btn-primary" form="cadastrarInstituicaoForm">
-                            Entrar
-                        </button>
+                            <button class="btn btn-default" type="reset" form="cadastrarInstituicaoForm" aria-hidden="true">
+                                Limpar
+                            </button>
+                            <button type="submit" class="btn btn-primary" form="cadastrarInstituicaoForm" aria-hidden="true">
+                                Entrar
+                            </button>
 
-                    </div>
+                        </div>
+                    </h:form>
                 </div>
             </div>
         </div>
 
-    </ui:composition>
+    </ui:composition> 
 </html>
 

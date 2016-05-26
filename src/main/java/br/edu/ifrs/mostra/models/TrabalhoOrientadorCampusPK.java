@@ -19,15 +19,15 @@ import javax.validation.constraints.NotNull;
 public class TrabalhoOrientadorCampusPK implements Serializable {
 
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message = "fk_trabalho nao pode ser nulo na tabela trabalho_orientador_campus")
     @Column(name = "fk_trabalho")
     private int fkTrabalho;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message = "fk_orientador nao pode ser nulo na tabela trabalho_orientador_campus")
     @Column(name = "fk_orientador")
     private int fkOrientador;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message = "fk_campus nao pode ser nulo na tabela trabalho_orientador_campus")
     @Column(name = "fk_campus")
     private int fkCampus;
 

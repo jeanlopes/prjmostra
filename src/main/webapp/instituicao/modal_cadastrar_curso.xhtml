@@ -1,51 +1,55 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <!-- Modal Cadastrar curso -->
     <div class="modal fade" id="modalCadastrarCurso" tabindex="-1" role="dialog" aria-labelledby="modalCadastrarCursoLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">
-                        <span aria-hidden="true">&times;</span>
-                        <span class="sr-only">×</span>
-                    </button>
-                    <h3 class="modal-title" id="modalCadastrarCursoLabel">Cadastrar Curso</h3>
-                </div>
-                <div class="modal-body">
-                    <form id="cadastrarCursoForm"  class="form-search" autocomplete="off">
+                <h:form id="cadastrarCursoForm"  class="form-search">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span aria-hidden="true">&times;</span>
+                            <span class="sr-only">×</span>
+                        </button>
+                        <h3 class="modal-title" id="modalCadastrarCursoLabel">Cadastrar Curso</h3>
+                    </div>
+                    <div class="modal-body">
+
                         <p class="css_mostra2015_texto_modal">
                             Obs: Tenha certeza de ter selecionado o Campus correto.
                         </p>
                         <div class="form-group">
                             <label for="nome">Nome</label>
-                            <input type="text" autofocus class="form-control" name="nome" maxlength="80"/>
+                            <input type="text" autofocus="autofocus" class="form-control" name="nome" maxlength="80"/>
                         </div>
 
 
                         <div class="form-group">
                             <label for="nivel">Nível</label>
-                            <select name="nivel" class="form-control">
-                                <option>Selecione</option>
-                                <option value="2">Técnico</option>
-                                <option value="3">Superior</option>
-                            </select>
+                            <h:selectOneMenu class="form-control" id="nivel">
+                                <f:selectItem itemValue="" itemLabel="Selecione" />
+                                <f:selectItem itemValue="2" itemLabel="Técnico" />
+                                <f:selectItem itemValue="3" itemLabel="Superior" />
+                            </h:selectOneMenu>
+
                         </div>
 
-                    </form>
 
-                </div>
-                <div class="modal-footer">
 
-                    <button class="btn btn-default" type="reset" form="cadastrarCursoForm">
-                        Limpar
-                    </button>
-                    <button type="submit" class="btn btn-primary" form="cadastrarCursoForm">
-                        Cadastrar
-                    </button>
+                    </div>
+                    <div class="modal-footer">
 
-                </div>
+                        <button class="btn btn-default" type="reset" form="cadastrarCursoForm">
+                            Limpar
+                        </button>
+                        <button type="submit" class="btn btn-primary" form="cadastrarCursoForm">
+                            Cadastrar
+                        </button>
+
+                    </div>
+                </h:form>
             </div>
         </div>
     </div>

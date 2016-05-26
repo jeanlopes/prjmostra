@@ -38,12 +38,12 @@ public class TrabalhoAutorCurso implements Serializable {
     @EmbeddedId
     protected TrabalhoAutorCursoPK trabalhoAutorCursoPK;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message = "seq nao pode ser null na tabela trabalho_autor_curso")
     @Column(name = "seq")
     private int seq;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
+    @NotNull(message = "email_trabalho nao pode ser null na tabela trabalho_autor_curso")
+    @Size(min = 1, max = 255, message = "tamanho nao permitido para o campo email_trabalho na tabela trabalho")
     @Column(name = "email_trabalho")
     private String emailTrabalho;
     @JoinColumn(name = "fk_trabalho", referencedColumnName = "id_trabalho", insertable = false, updatable = false)

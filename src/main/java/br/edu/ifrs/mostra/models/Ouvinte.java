@@ -37,17 +37,17 @@ public class Ouvinte implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message = "fk_usuario nao pode ser null na tabela ouvinte")
     @Column(name = "fk_usuario")
     private Integer fkUsuario;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message = "tipo_ouvinte nao pode ser null na tabela ouvinte")
     @Column(name = "tipo_ouvinte")
     private int tipoOuvinte;
-    @Size(max = 255)
+    @Size(max = 255, message = "tamanho nao permitido para o campo outro na tabela ouvinte")
     @Column(name = "outro")
     private String outro;
-    @Size(max = 255)
+    @Size(max = 255, message = "tamanho nao permitido para o campo empresa na tabela ouvinte")
     @Column(name = "empresa")
     private String empresa;
     @JoinColumn(name = "fk_instituicao", referencedColumnName = "id_instituicao")

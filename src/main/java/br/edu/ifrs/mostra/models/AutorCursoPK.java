@@ -19,11 +19,11 @@ import javax.validation.constraints.NotNull;
 public class AutorCursoPK implements Serializable {
 
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message = "fk_autor em AutorCurso nao pode ser null")
     @Column(name = "fk_autor")
     private int fkAutor;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message = "fk_curso em AutorCurso nao pode ser null")
     @Column(name = "fk_curso")
     private int fkCurso;
 

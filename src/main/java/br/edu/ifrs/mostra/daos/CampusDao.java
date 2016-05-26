@@ -6,8 +6,14 @@
 package br.edu.ifrs.mostra.daos;
 
 import br.edu.ifrs.mostra.models.Campus;
+import br.edu.ifrs.mostra.utils.ViolationLogger;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.persistence.EntityTransaction;
+import javax.persistence.PersistenceException;
+import javax.persistence.QueryTimeoutException;
+import javax.persistence.TransactionRequiredException;
 
 /**
  *
@@ -41,8 +47,21 @@ public class CampusDao implements Dao<Campus>{
     @Override
     public Campus save(Campus entity) {
         
-        context.em.persist(entity);
-        context.em.flush();
+        EntityTransaction tx = context.em.getTransaction();
+        tx.begin();
+        try {
+            context.em.persist(entity);
+            tx.commit();
+        } catch (IllegalStateException | TransactionRequiredException | QueryTimeoutException e) {
+
+            log.log(Level.SEVERE, "nao foi possivel cadastrar o campus", e);
+
+        } catch (PersistenceException e) {
+
+            ViolationLogger.log(e, log);
+
+            log.log(Level.SEVERE, "nao foi possivel cadastrar o campus", e);
+        }
         
         return entity;
     }

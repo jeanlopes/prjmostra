@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">    
     <context-param>
         <param-name>javax.faces.PROJECT_STAGE</param-name>
         <param-value>Development</param-value>
@@ -30,24 +30,23 @@
         <error-code>403</error-code>
         <location>/faces/loginerror.xhtml</location>
     </error-page>
-    
-    <!-- Configurações SPRING SECURITY --> 
-    <context-param> 
-        <param-name>contextConfigLocation</param-name> 
-        <param-value>/WEB-INF/spring/security.xml</param-value> 
-    </context-param> 
-    <listener> 
-        <listener-class> org.springframework.web.context.ContextLoaderListener </listener-class> 
-    </listener> 
-    <filter> 
-        <filter-name>springSecurityFilterChain</filter-name> 
-        <filter-class> org.springframework.web.filter.DelegatingFilterProxy </filter-class> 
-    </filter> 
-    <filter-mapping> 
-        <filter-name>springSecurityFilterChain</filter-name> 
-        <url-pattern>/*</url-pattern> 
-    </filter-mapping> <!-- Fim Configurações SPRING SECURITY -->
-
+    <!-- Configurações SPRING SECURITY -->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>/WEB-INF/spring/security.xml</param-value>
+    </context-param>
+    <listener>
+        <listener-class> org.springframework.web.context.ContextLoaderListener </listener-class>
+    </listener>
+    <filter>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <filter-class> org.springframework.web.filter.DelegatingFilterProxy </filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <!-- Fim Configurações SPRING SECURITY -->
     <filter>
         <filter-name>PapelFilter</filter-name>
         <filter-class>br.edu.ifrs.mostra.filters.PapelFilter</filter-class>
@@ -56,7 +55,6 @@
         <filter-name>PapelFilter</filter-name>
         <url-pattern>/faces/index.xhtml</url-pattern>
     </filter-mapping>
-    
     <env-entry>
         <env-entry-name>ETAPA_INSCRICAO_AUTOR</env-entry-name>
         <env-entry-type>java.lang.Boolean</env-entry-type>
@@ -67,4 +65,5 @@
         <env-entry-type>java.lang.Boolean</env-entry-type>
         <env-entry-value>true</env-entry-value>
     </env-entry>
+    
 </web-app>

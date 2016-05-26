@@ -68,32 +68,32 @@ public class Trabalho implements Serializable {
     private Integer idTrabalho;
     @Column(name = "nivel")
     private Integer nivel;
-    @Size(max = 255)
+    @Size(max = 255, message = "tamanho nao permitido para o campo titulo na tabela trabalho")
     @Column(name = "titulo")
     private String titulo;
-    @Size(max = 255)
+    @Size(max = 255, message = "tamanho nao permitido para o campo titulo_ordenar na tabela trabalho")
     @Column(name = "titulo_ordenar")
     private String tituloOrdenar;
-    @Size(max = 255)
+    @Size(max = 255, message = "tamanho nao permitido para o campo palavra1 na tabela trabalho")
     @Column(name = "palavra1")
     private String palavra1;
-    @Size(max = 255)
+    @Size(max = 255, message = "tamanho nao permitido para o campo palavra2 na tabela trabalho")
     @Column(name = "palavra2")
     private String palavra2;
-    @Size(max = 255)
+    @Size(max = 255, message = "tamanho nao permitido para o campo palavra3 na tabela trabalho")
     @Column(name = "palavra3")
     private String palavra3;
-    @Size(max = 255)
+    @Size(max = 255, message = "tamanho nao permitido para o campo apoiadores na tabela trabalho")
     @Column(name = "apoiadores")
     private String apoiadores;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
+    @NotNull(message = "resumo nao pode ser nulo na tabela trabalho")
+    @Size(min = 1, max = 255, message = "tamanho nao permitido para o campo resumo na tabela trabalho")
     @Column(name = "resumo")
     private String resumo;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
+    @NotNull(message = "resumo2 nao pode ser nulo na tabela trabalho")
+    @Size(min = 1, max = 255, message = "tamanho nao permitido para o campo resumo2 na tabela trabalho")
     @Column(name = "resumo2")
     private String resumo2;
     @Column(name = "status")
@@ -104,10 +104,10 @@ public class Trabalho implements Serializable {
     @Column(name = "data_atualizacao")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataAtualizacao;
-    @Size(max = 255)
+    @Size(max = 255, message = "tamanho nao permitido para o campo ip_cadastro na tabela trabalho")
     @Column(name = "ip_cadastro")
     private String ipCadastro;
-    @Size(max = 255)
+    @Size(max = 255, message = "tamanho nao permitido para o campo ip_atualizacao na tabela trabalho")
     @Column(name = "ip_atualizacao")
     private String ipAtualizacao;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
@@ -116,7 +116,7 @@ public class Trabalho implements Serializable {
     @Column(name = "premiado")
     private Integer premiado;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message = "nao pode ser null no campo seq_sessao na tabela trabalho")
     @Column(name = "seq_sessao")
     private int seqSessao;
     @Column(name = "turno1")

@@ -8,9 +8,12 @@ package br.edu.ifrs.mostra.services;
 //import br.edu.ifrs.mostra.daos.CampusDao;
 import br.edu.ifrs.mostra.daos.CursoDao;
 import br.edu.ifrs.mostra.models.Curso;
+import com.google.gson.Gson;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -34,18 +37,36 @@ public class CursoBean {
         
     
     @GET
-    @Path("/get_campus_list/{id_instituicao}")
+    @Path("/get_curso_list/{id_campus}")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Curso> listAll(@PathParam("id_instituicao") int idCampus ) {
-        return dao.findAllByCampusId(idCampus);
+    public String listAll(@PathParam("id_campus") int idCampus ) {
+        
+        List<br.edu.ifrs.mostra.models.Curso> cursos = dao.findAllByCampusId(idCampus);
+        List<Curso> cursosDto = new ArrayList<>(cursos.size());
+        
+        cursos.stream().forEach( (curso) -> {
+            Curso cursoDto = new Curso();
+            cursoDto.setIdCurso(curso.getIdCurso());
+            cursoDto.setNome(curso.getNome());
+            cursoDto.setNivel(curso.getNivel());
+            cursoDto.setFkCampus(curso.getFkCampus());
+            
+            cursosDto.add(cursoDto);
+        });
+        
+        Gson gson = new Gson();
+        
+        String listaJson = gson.toJson(cursosDto);
+        
+        return listaJson;
     }
             
     @POST
     @Path("/create")
     @Produces(MediaType.APPLICATION_JSON)
-    public Curso create(@PathParam("nome") String nome, 
-                        @PathParam("nivel") int nivel, 
-                        @PathParam("campus") int campus) {
+    public String create(@FormParam("nome") String nome, 
+                        @FormParam("nivel") int nivel, 
+                        @FormParam("campus") int campus) {
         
         
         Curso curso = new Curso();
@@ -53,6 +74,11 @@ public class CursoBean {
         curso.setNome(nome);
         curso.setNivel(nivel);
         
-        return curso;
+        curso = this.dao.save(curso);
+        
+        Gson gson = new Gson();
+        String cursoJson = gson.toJson(curso);
+        
+        return cursoJson;
     }
 }

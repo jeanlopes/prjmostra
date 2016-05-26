@@ -15,9 +15,9 @@ public abstract class UsuarioController {
     private String cpf;
     private String nome;
     private String email;
-    private String confirmar_email;
+    private String confirmarEmail;
     private String senha;
-    private String confirmar_senha;
+    private String confirmarSenha;
     private boolean registered;
 
     public String getCpf() {
@@ -49,12 +49,12 @@ public abstract class UsuarioController {
         this.email = email;
     }
 
-    public String getConfirmar_email() {
-        return confirmar_email;
+    public String getConfirmarEmail() {
+        return confirmarEmail;
     }
 
-    public void setConfirmar_email(String confirmar_email) {
-        this.confirmar_email = confirmar_email;
+    public void setConfirmarEmail(String confirmar_email) {
+        this.confirmarEmail = confirmar_email;
     }
 
     public String getSenha() {
@@ -65,12 +65,12 @@ public abstract class UsuarioController {
         this.senha = senha;
     }
 
-    public String getConfirmar_senha() {
-        return confirmar_senha;
+    public String getConfirmarSenha() {
+        return confirmarSenha;
     }
 
-    public void setConfirmar_senha(String confirmar_senha) {
-        this.confirmar_senha = confirmar_senha;
+    public void setConfirmarSenha(String confirmar_senha) {
+        this.confirmarSenha = confirmar_senha;
     }
 
     public boolean isRegistered() {
@@ -81,6 +81,11 @@ public abstract class UsuarioController {
         this.registered = registered;
     }
     
+    public boolean isValidSenha () {
+        return this.senha.equals(this.confirmarSenha);
+    }
     
-    
+    public boolean isValidEmail() {
+        return this.email.equals(this.confirmarEmail);
+    }
 }

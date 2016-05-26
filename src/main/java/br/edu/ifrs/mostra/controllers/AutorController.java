@@ -5,23 +5,22 @@
  */
 package br.edu.ifrs.mostra.controllers;
 
+import br.edu.ifrs.mostra.models.Autor;
 import br.edu.ifrs.mostra.models.Instituicao;
-import br.edu.ifrs.mostra.models.Campus;
-import br.edu.ifrs.mostra.models.Curso;
+import br.edu.ifrs.mostra.models.Usuario;
 import br.edu.ifrs.mostra.services.AutorBean;
 import br.edu.ifrs.mostra.services.InstituicaoBean;
+import br.edu.ifrs.mostra.services.LoginBean;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
-import javax.faces.model.SelectItem;
 
 /**
  *
@@ -36,19 +35,15 @@ public class AutorController extends UsuarioController {
 
     @EJB
     private AutorBean autorBean;
-    
-    private List<SelectItem> instituicoes;
-    
-    private List<SelectItem> campusList;
-    
-    private List<SelectItem> cursoList;
-    
-    private Instituicao instituicao;
-    
-    private Campus campus;   
-    
-    private Curso curso;
 
+    @EJB
+    private LoginBean loginBean;
+
+    private List<Instituicao> instituicoes;
+
+    private int idInstituicao;
+
+    private int idCurso;
 
     /**
      * Creates a new instance of AutorBean
@@ -57,68 +52,88 @@ public class AutorController extends UsuarioController {
 
     }
 
-    public Campus getCampus() {
-        return campus;
+    @PostConstruct
+    public void init() {
+        List<Instituicao> inst = this.instituicaoBean.listAll();
+
+        this.setInstituicoes(inst);
+    }
+   
+    public int getIdCurso() {
+        return idCurso;
     }
 
-    public void setCampus(Campus campus) {
-        this.campus = campus;
+    public void setIdCurso(int curso) {
+        this.idCurso = curso;
     }
 
-    public Curso getCurso() {
-        return curso;
+    public void setIdInstituicao(int idInstituicao) {
+        this.idInstituicao = idInstituicao;
     }
 
-    public void setCurso(Curso curso) {
-        this.curso = curso;
-    }
-
-    public List<SelectItem> getCampusList() {
-        return campusList;
-    }
-
-    public void setCampusList(List<SelectItem> campusList) {
-        this.campusList = campusList;
-    }
-
-    public List<SelectItem> getCursoList() {
-        return cursoList;
-    }
-
-    public void setCursoList(List<SelectItem> cursoList) {
-        this.cursoList = cursoList;
-    }
-
-    public void setInstituicao(Instituicao instituicao) {
-        this.instituicao = instituicao;
-    }
-    
-    public Instituicao getInstituicao() {
-        return this.instituicao;
+    public int getIdInstituicao() {
+        return this.idInstituicao;
     }
 
     public void setInstituicoes(List<Instituicao> instituicoes) {
-        List<SelectItem> itens;
-        itens = new ArrayList<>(this.instituicoes.size());
-        
-        instituicoes.stream().forEach((inst) -> {
-            itens.add(new SelectItem(inst.getIdInstituicao(), inst.getNome()));
-        });
+
+        this.instituicoes = instituicoes;
     }
-    
-    public List<SelectItem> getInstituicoes() {
-        
+
+    public List<Instituicao> getInstituicoes() {
+
         return this.instituicoes;
     }
-    
+
     public void fazerInscricao() {
+
+        FacesContext context = FacesContext.getCurrentInstance();
+
+        if (!isValidSenha()) {
+            context.addMessage("Erro", new FacesMessage("As senhas não conferem!"));
+            return;
+        }
+
+        if (!isValidEmail()) {
+            context.addMessage("Erro", new FacesMessage("Os e-mails não conferem!"));
+            return;
+        }
         
+        String curso = context.getExternalContext().getRequestParameterMap().get("curso");
+        this.setCpf(context.getExternalContext().getRequestParameterMap().get("cpf"));
+        idCurso = Integer.parseInt(curso);
+
+        Usuario usuario = new Usuario();
+        usuario.setCpf(this.getCpf());
+        usuario.setEmail(this.getEmail());
+        usuario.setNome(this.getNome());
+        usuario.setSenha(this.getSenha());
+
+        Autor autor = new Autor();
+        autor = this.autorBean.cadastrarAutor(usuario, autor, idCurso, context);
+        if (autor != null) {
+            this.loginBean.login(usuario);
+            context.addMessage("Sucesso", new FacesMessage("Dados cadastrados com sucesso"));
+            try {
+                context.getExternalContext().redirect("/area_do_autor.xhtml");
+            } catch (IOException ex) {
+                Logger.getLogger(AutorController.class.getName())
+                        .log(Level.SEVERE, "nao foi possivel redirecionar o usuario", ex);
+            }
+        } else {
+            context.addMessage("Erro", new FacesMessage("Não foi possível cadastrar o autor"));
+        }
+
+    }
+
+    public void fazerInscricaoIncremental() {
+
     }
 
     public void inscricao() {
 
         FacesContext context = FacesContext.getCurrentInstance();
-        
+
         String cpf = context.getExternalContext().getRequestParameterValuesMap().get("cpf")[0];
         this.setCpf(cpf);
         try {
@@ -135,12 +150,11 @@ public class AutorController extends UsuarioController {
             } else if (this.isValidCpf()) {
 
                 this.setRegistered(false);
-                this.setInstituicoes(this.instituicaoBean.listAll());
-                
+
             } else {
                 context.addMessage("Erro", new FacesMessage("CPF inválido ou não informado"));
                 context.getExternalContext().redirect("index.xhtml");
-                
+
             }
 
         } catch (IOException ex) {

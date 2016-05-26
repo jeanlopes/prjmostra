@@ -47,12 +47,12 @@ public class Curso implements Serializable {
     @Column(name = "fk_campus")
     private Integer fkCampus;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
+    @NotNull(message = "nome nao pode ser null na tabela Curso")
+    @Size(min = 1, max = 100, message = "tamanho nao permitido para o campo nome na tabela curso")
     @Column(name = "nome")
     private String nome;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message = "nivel nao pode ser null na tabela Curso")
     @Column(name = "nivel")
     private int nivel;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "curso")

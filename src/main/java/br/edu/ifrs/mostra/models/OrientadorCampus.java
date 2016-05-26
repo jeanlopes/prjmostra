@@ -37,11 +37,11 @@ public class OrientadorCampus implements Serializable {
     @EmbeddedId
     protected OrientadorCampusPK orientadorCampusPK;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message = "seq nao pode ser null na tabela orientador_campus")
     @Column(name = "seq")
     private int seq;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message = "status nao pode ser null na tabela orientador_campus")
     @Column(name = "status")
     private int status;
     @JoinColumn(name = "fk_orientador", referencedColumnName = "fk_usuario", insertable = false, updatable = false)

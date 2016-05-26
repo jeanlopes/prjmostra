@@ -37,11 +37,11 @@ public class AvaliadorSessao implements Serializable {
     @EmbeddedId
     protected AvaliadorSessaoPK avaliadorSessaoPK;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message = "seq nao pode ser null na tabela avaliadorSessao")
     @Column(name = "seq")
     private int seq;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message = "status nao pode ser null na tabela avaliadorSessao")
     @Column(name = "status")
     private int status;
     @JoinColumn(name = "fk_sessao", referencedColumnName = "id_sessao", insertable = false, updatable = false)

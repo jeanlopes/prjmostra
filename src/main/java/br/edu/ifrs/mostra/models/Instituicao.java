@@ -45,34 +45,34 @@ public class Instituicao implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id_instituicao")
-    private Integer idInstituicao;
+    private int idInstituicao;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
+    @NotNull(message = "nome nao pode ser nulo na tabela instituicao")
+    @Size(min = 1, max = 255, message = "tamanho do nome nao permitido na tabela instituicao")
     @Column(name = "nome")
     private String nome;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
+    @NotNull(message = "sigla nao pode ser nula na tabela instituicao")
+    @Size(min = 1, max = 255, message = "tamanho da sigla nao permitido na tabela instituicao")
     @Column(name = "sigla")
     private String sigla;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
+    @NotNull(message = "nome da cidade nao pode ser nulo na tabela instituicao")
+    @Size(min = 1, max = 255, message = "tamanho de nome de cidade nao permitido na tabela instituicao")
     @Column(name = "cidade")
     private String cidade;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
+    @NotNull(message = "nome de estado nao pode ser nulo na tabela instituicao")
+    @Size(min = 1, max = 255, message = "tamanho do nome do estado nao permitido na tabela instituicao")
     @Column(name = "estado")
     private String estado;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
+    @NotNull(message = "site nao pode ser nulo na tabela instituicao")
+    @Size(min = 1, max = 255, message = "tamanho do campo site nao permitido na tabela instituicao")
     @Column(name = "site")
     private String site;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message = "tipo nao pode ser nulo na tabela instituicao")
     @Column(name = "tipo")
     private int tipo;
     @OneToMany(mappedBy = "fkInstituicao")
@@ -87,7 +87,7 @@ public class Instituicao implements Serializable {
         this.idInstituicao = idInstituicao;
     }
 
-    public Instituicao(Integer idInstituicao, String nome, String sigla, String cidade, String estado, String site, int tipo) {
+    public Instituicao(int idInstituicao, String nome, String sigla, String cidade, String estado, String site, int tipo) {
         this.idInstituicao = idInstituicao;
         this.nome = nome;
         this.sigla = sigla;
@@ -97,11 +97,11 @@ public class Instituicao implements Serializable {
         this.tipo = tipo;
     }
 
-    public Integer getIdInstituicao() {
+    public int getIdInstituicao() {
         return idInstituicao;
     }
 
-    public void setIdInstituicao(Integer idInstituicao) {
+    public void setIdInstituicao(int idInstituicao) {
         this.idInstituicao = idInstituicao;
     }
 
@@ -174,7 +174,6 @@ public class Instituicao implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idInstituicao != null ? idInstituicao.hashCode() : 0);
         return hash;
     }
 
@@ -185,7 +184,7 @@ public class Instituicao implements Serializable {
             return false;
         }
         Instituicao other = (Instituicao) object;
-        if ((this.idInstituicao == null && other.idInstituicao != null) || (this.idInstituicao != null && !this.idInstituicao.equals(other.idInstituicao))) {
+        if (this.idInstituicao != other.idInstituicao) {
             return false;
         }
         return true;

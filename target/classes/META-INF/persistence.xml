@@ -1,10 +1,35 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.1" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
   <persistence-unit name="mostraPU" transaction-type="JTA">
-    <jta-data-source>java:app/jdbc/mostraDatasource</jta-data-source>
+     
+    <jta-data-source>java:/mostraDatasource</jta-data-source>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
-    <properties>
+    <validation-mode>AUTO</validation-mode>
+    <!-- <properties>
       <property name="javax.persistence.schema-generation.database.action" value="create"/>
-    </properties>
+    </properties> -->
+    <class>br.edu.ifrs.mostra.models.Area</class>
+    <class>br.edu.ifrs.mostra.models.Autor</class>
+    <class>br.edu.ifrs.mostra.models.AutorCurso</class>
+    <class>br.edu.ifrs.mostra.models.Avaliador</class>
+    <class>br.edu.ifrs.mostra.models.AvaliadorSessao</class>
+    <class>br.edu.ifrs.mostra.models.Campus</class>
+    <class>br.edu.ifrs.mostra.models.Categoria</class>
+    <class>br.edu.ifrs.mostra.models.Curso</class>
+    <class>br.edu.ifrs.mostra.models.Grupo</class>
+    <class>br.edu.ifrs.mostra.models.Instituicao</class>
+    <class>br.edu.ifrs.mostra.models.Modalidade</class>
+    <class>br.edu.ifrs.mostra.models.Organizador</class>
+    <class>br.edu.ifrs.mostra.models.Orientador</class>
+    <class>br.edu.ifrs.mostra.models.OrientadorCampus</class>
+    <class>br.edu.ifrs.mostra.models.Ouvinte</class>
+    <class>br.edu.ifrs.mostra.models.ParecerTrabalho</class>
+    <class>br.edu.ifrs.mostra.models.Revisor</class>
+    <class>br.edu.ifrs.mostra.models.Sessao</class>
+    <class>br.edu.ifrs.mostra.models.Trabalho</class>
+    <class>br.edu.ifrs.mostra.models.TrabalhoAutorCurso</class>
+    <class>br.edu.ifrs.mostra.models.TrabalhoOrientadorCampus</class>
+    <class>br.edu.ifrs.mostra.models.Usuario</class>
+    <class>br.edu.ifrs.mostra.models.Voluntario</class>
   </persistence-unit>
 </persistence>

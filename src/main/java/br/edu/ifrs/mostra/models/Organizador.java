@@ -35,15 +35,15 @@ public class Organizador implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message = "fk_usuario nao pode ser null na tabela organizador")
     @Column(name = "fk_usuario")
     private Integer fkUsuario;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message = "nivel nao pode ser null na tabela organizador")
     @Column(name = "nivel")
     private int nivel;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message = "status nao pode ser null na tabela organizador")
     @Column(name = "status")
     private int status;
     @JoinColumn(name = "fk_usuario", referencedColumnName = "id_usuario", insertable = false, updatable = false)

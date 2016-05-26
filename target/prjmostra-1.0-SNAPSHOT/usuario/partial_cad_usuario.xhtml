@@ -6,11 +6,11 @@
       xmlns:jsf="http://xmlns.jcp.org/jsf"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <ui:composition>
-        <input name="cpf" type="hidden" value="#{requestScope[beanName].cpf}" />
+        <input name="cpf" type="hidden" value="#{myBean.cpf}" />
         <div class="form-group">
             <label for="nome" class="col-sm-2 control-label">Nome</label>
             <div class="col-sm-5">
-                <input type="text" required class="form-control" jsf:id="nome" name="nome" value="#{requestScope[beanName].nome}" autofocus />
+                <input type="text" required="required" class="form-control" jsf:id="nome" name="nome" value="#{myBean.nome}" autofocus="autofocus" />
                 <h:message for="nome" />
             </div>
         </div>
@@ -18,7 +18,7 @@
         <div class="form-group">
             <label for="email" class="col-sm-2 control-label">E-mail</label>
             <div class="col-sm-5">
-                <input type="email" autocomplete="off" required class="form-control" name="email" jsf:id="email" value="#{requestScope[beanName].email}" />
+                <input type="email" autocomplete="off" required="required" class="form-control" name="email" jsf:id="email" value="#{myBean.email}" />
                 <h:message for="email" />
             </div>
         </div>
@@ -26,18 +26,17 @@
         <div class="form-group">
             <label for="email" class="col-sm-2 control-label">Confirmar E-mail</label>
             <div class="col-sm-5">
-                <input type="email" autocomplete="off" required class="form-control" jsf:id="confirmar_email" name="confirmar_email" value="#{requestScope[beanName].confirmarEmail}" />
+                <input type="email" autocomplete="off" required="required" class="form-control" jsf:id="confirmar_email" name="confirmar_email" value="#{myBean.confirmarEmail}" />
                 <h:message for="confirmar_email" />
             </div>
         </div>
 
-
-        <c:if test="#{requestScope[beanName].isRegistered}">
+        <c:if test="#{!myBean.registered}">
 
             <div class="form-group">
                 <label for="senha" class="col-sm-2 control-label">Senha</label>
                 <div class="col-sm-5">
-                    <input type="password" autocomplete="off" required class="form-control" jsf:id="senha" name="senha" />
+                    <input type="password" autocomplete="off" required="required" class="form-control" jsf:id="senha" name="senha" value="#{myBean.senha}" />
                     <h:message for="senha" />
                 </div>
             </div>
@@ -45,7 +44,7 @@
             <div class="form-group">
                 <label for="confirmar_senha" class="col-sm-2 control-label">Confirmar Senha</label>
                 <div class="col-sm-5">
-                    <input type="password" required class="form-control" jsf:id="confirmar_senha" name="confirmar_senha" />
+                    <input type="password" required="required" class="form-control" jsf:id="confirmar_senha" name="confirmar_senha" value="#{myBean.confirmarSenha}" />
                     <h:message for="confirmar_senha" />
                 </div>
             </div>

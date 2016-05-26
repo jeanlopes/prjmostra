@@ -19,15 +19,15 @@ import javax.validation.constraints.NotNull;
 public class ParecerTrabalhoPK implements Serializable {
 
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message = "seq nao pode ser null na tabela Parecer_trabalho")
     @Column(name = "seq")
     private int seq;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message = "fk_trabalho nao pode ser null na tabela parecer_trabalho")
     @Column(name = "fk_trabalho")
     private int fkTrabalho;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message = "fk_revisor nao pode ser null na tabela parecer_trabalho")
     @Column(name = "fk_revisor")
     private int fkRevisor;
 

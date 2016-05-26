@@ -42,19 +42,19 @@ public class Avaliador implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message = "fk_usuario nao pode ser nulo na tabela avaliador")
     @Column(name = "fk_usuario")
     private Integer fkUsuario;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message = "tipo_servidor nao pode ser nulo na tabela avaliador")
     @Column(name = "tipo_servidor")
     private int tipoServidor;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message = "formacao nao pode ser nulo na tabela avaliador")
     @Column(name = "formacao")
     private int formacao;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message = "status nao pode ser nulo na tabela avaliador")
     @Column(name = "status")
     private int status;
     @ManyToMany(mappedBy = "avaliadorList")

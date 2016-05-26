@@ -8,9 +8,9 @@
         <div class="form-group">
         <label for="instituicao" class="col-sm-2 control-label">Campus</label>
         <div class="col-sm-8">
-            <h:selectOneMenu id="campus" value="#{applicationScope[nameBean].campus }">
-                <f:selectItem itemValue="" itemLabel="Selecione..." />
-            </h:selectOneMenu>
+            <select id="campus" class="form-control campus" value="" required="false">
+                <option value="" >Selecione...</option>
+            </select>
             <br />
             <button class="btn btn-danger" type="button">Cadastrar outro campus...</button>
         </div>

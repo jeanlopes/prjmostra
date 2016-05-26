@@ -7,6 +7,7 @@ package br.edu.ifrs.mostra.models;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -38,20 +39,20 @@ public class AutorCurso implements Serializable {
     @EmbeddedId
     protected AutorCursoPK autorCursoPK;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
+    @NotNull(message = "sequencia em AutorCurso nao pode ser null")
+    @Size(min = 1, max = 255, message = "tamanho nao permitido para o campo seq na tabela autor_curso")
     @Column(name = "seq")
     private String seq;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
+    @NotNull(message = "satus em AutorCurso nao pode ser null")
+    @Size(min = 1, max = 255, message = "tamanho nao permitido para o campo status na tabela autor_curso")
     @Column(name = "status")
     private String status;
     @JoinColumn(name = "fk_curso", referencedColumnName = "id_curso", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Curso curso;
     @JoinColumn(name = "fk_autor", referencedColumnName = "fk_usuario", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, cascade = CascadeType.PERSIST)
     private Autor autor;
 
     public AutorCurso() {

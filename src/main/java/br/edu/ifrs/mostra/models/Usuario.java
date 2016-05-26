@@ -18,6 +18,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -44,23 +45,23 @@ public class Usuario implements Serializable {
     @Column(name = "id_usuario")
     private Integer idUsuario;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message = "cpf nao pode ser nulo")
     @Size(min = 1, max = 255)
     @Column(name = "cpf")
     private String cpf;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message = "nome nao pode ser nulo")
     @Size(min = 1, max = 255)
     @Column(name = "nome")
     private String nome;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message = "senha nao pode ser nula")
     @Size(min = 1, max = 255)
     @Column(name = "senha")
     private String senha;
-    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
+    @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="endereco de email invalido")//if the field contains email address consider using this annotation to enforce field validation
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message = "email nao pode ser null")
     @Size(min = 1, max = 255)
     @Column(name = "email")
     private String email;

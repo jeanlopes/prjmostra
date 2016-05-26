@@ -42,8 +42,8 @@ public class Modalidade implements Serializable {
     @Column(name = "id_modalidade")
     private Integer idModalidade;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
+    @NotNull(message = "nome nao pode ser null na tabela modalidade")
+    @Size(min = 1, max = 255, message = "tamanho de campo nao permitido para o campo nome na tabela modalidade")
     @Column(name = "nome")
     private String nome;
     @OneToMany(mappedBy = "fkModalidade")

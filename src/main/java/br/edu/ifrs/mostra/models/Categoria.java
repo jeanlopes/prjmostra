@@ -40,7 +40,7 @@ public class Categoria implements Serializable {
     @Basic(optional = false)
     @Column(name = "id_categoria")
     private Integer idCategoria;
-    @Size(max = 255)
+    @Size(max = 255, message = "tamanho nao permitido para o campo nome na tabela categoria")
     @Column(name = "nome")
     private String nome;
     @OneToMany(mappedBy = "fkCategoria")

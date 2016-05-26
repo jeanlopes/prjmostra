@@ -7,12 +7,13 @@ package br.edu.ifrs.mostra.services;
 
 import br.edu.ifrs.mostra.daos.InstituicaoDao;
 import br.edu.ifrs.mostra.models.Instituicao;
+import com.google.gson.Gson;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
@@ -37,16 +38,19 @@ public class InstituicaoBean {
     @POST
     @Path("/create")
     @Produces(MediaType.APPLICATION_JSON)
-    public Instituicao create(@PathParam("nome") String nome,
-                              @PathParam("sigla") String sigla,
-                              @PathParam("cidade") String cidade,
-                              @PathParam("estado") String estado,
-                              @PathParam("site") String site,
-                              @PathParam("tipo") int tipo) {
+    public String create(@FormParam("nome") String nome,
+                              @FormParam("sigla") String sigla,
+                              @FormParam("cidade") String cidade,
+                              @FormParam("estado") String estado,
+                              @FormParam("site") String site,
+                              @FormParam("tipo") int tipo) {
         
         Instituicao inst = new Instituicao(0, nome, sigla, cidade, estado, site, tipo);
         inst = this.instituicaoDao.save(inst);
-        return inst;
+        
+        Gson gson = new Gson();
+        String newInst = gson.toJson(inst);
+        return newInst;
     }
     
 }

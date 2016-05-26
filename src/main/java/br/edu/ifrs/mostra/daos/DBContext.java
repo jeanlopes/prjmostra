@@ -1,5 +1,7 @@
 package br.edu.ifrs.mostra.daos;
 
+import br.edu.ifrs.mostra.models.Autor;
+import br.edu.ifrs.mostra.models.AutorCurso;
 import br.edu.ifrs.mostra.models.Campus;
 import br.edu.ifrs.mostra.models.Curso;
 import br.edu.ifrs.mostra.models.Instituicao;
@@ -22,7 +24,7 @@ public class DBContext {
     //@PersistenceContext(unitName = "mostraPU")
     private static EntityManagerFactory entityManagerFactory;
     private static JinqJPAStreamProvider streams;
-    protected EntityManager em;
+    public EntityManager em;
     private static DBContext instance = null;
     
     private DBContext () {
@@ -66,5 +68,12 @@ public class DBContext {
         return streams.streamAll(em, Usuario.class);
     }
     
+    protected JinqStream<Autor> autor() {
+        return streams.streamAll(em, Autor.class);
+    }
+    
+    protected JinqStream<AutorCurso> autorCurso() {
+        return streams.streamAll(em, AutorCurso.class);
+    }
     
 }

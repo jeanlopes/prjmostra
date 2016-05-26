@@ -37,7 +37,7 @@ public class Autor implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message = "fk_usuario em Autor nao pode ser null")
     @Column(name = "fk_usuario")
     private Integer fkUsuario;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "autor")
@@ -45,7 +45,7 @@ public class Autor implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "autor")
     private List<TrabalhoAutorCurso> trabalhoAutorCursoList;
     @JoinColumn(name = "fk_usuario", referencedColumnName = "id_usuario", insertable = false, updatable = false)
-    @OneToOne(optional = false)
+    @OneToOne(optional = false, cascade = CascadeType.PERSIST)
     private Usuario usuario;
 
     public Autor() {

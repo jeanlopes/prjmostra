@@ -45,12 +45,13 @@ public class Campus implements Serializable {
     @Basic(optional = false)
     @Column(name = "id_campus")
     private Integer idCampus;
-    @Size(max = 255)
+    @Size(max = 255, message = "tamanho nao permitido para o campo nome na tabela campus")
     @Column(name = "nome")
+    @NotNull(message = "nome nao pode ser null na tabela campus")
     private String nome;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
+    @NotNull(message = "cidade nao pode ser null na tabela campus")
+    @Size(min = 1, max = 255, message = "tamanho nao permitido para o campo cidade na tabela campus")
     @Column(name = "cidade")
     private String cidade;
     @OneToMany(mappedBy = "fkCampus")
@@ -59,6 +60,7 @@ public class Campus implements Serializable {
     private List<TrabalhoOrientadorCampus> trabalhoOrientadorCampusList;
     @JoinColumn(name = "fk_instituicao", referencedColumnName = "id_instituicao")
     @ManyToOne
+    @NotNull(message = "fkInstituicao nao pode ser null na tabela campus")
     private Instituicao fkInstituicao;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "campus")
     private List<OrientadorCampus> orientadorCampusList;

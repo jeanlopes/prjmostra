@@ -39,12 +39,12 @@ public class TrabalhoOrientadorCampus implements Serializable {
     @EmbeddedId
     protected TrabalhoOrientadorCampusPK trabalhoOrientadorCampusPK;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message = "seq nao pode ser nula na tabela trabalho_orientador_campus")
     @Column(name = "seq")
     private int seq;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
+    @NotNull(message = "email_trabalho nao pode ser nulo na tabela trabalho_orientador_campus")
+    @Size(min = 1, max = 255, message = "tamanho nao permitido para o campo email_trabalho na tabela trabalho_orientador_campus")
     @Column(name = "email_trabalho")
     private String emailTrabalho;
     @JoinColumn(name = "fk_orientador", referencedColumnName = "fk_usuario", insertable = false, updatable = false)

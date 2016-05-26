@@ -39,15 +39,15 @@ public class Orientador implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message = "fk_usuario nao pode ser null na tabela orientador")
     @Column(name = "fk_usuario")
     private Integer fkUsuario;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message = "tipo_servidor nao pode ser null na tabela orientador")
     @Column(name = "tipo_servidor")
     private int tipoServidor;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message = "status nao pode ser null na tabela orientador")
     @Column(name = "status")
     private int status;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "orientador")
