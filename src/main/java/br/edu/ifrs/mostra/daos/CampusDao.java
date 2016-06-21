@@ -6,27 +6,27 @@
 package br.edu.ifrs.mostra.daos;
 
 import br.edu.ifrs.mostra.models.Campus;
-import br.edu.ifrs.mostra.utils.ViolationLogger;
 import java.util.List;
+import java.util.Optional;
 import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.persistence.EntityTransaction;
-import javax.persistence.PersistenceException;
-import javax.persistence.QueryTimeoutException;
-import javax.persistence.TransactionRequiredException;
 
 /**
  *
  * @author jean
  */
 public class CampusDao implements Dao<Campus>{
-    
-    private final DBContext context = DBContext.getInstance();
-    private static final Logger log = Logger.getLogger(CampusDao.class.getName());
+   
 
     @Override
     public List<Campus> listAll() {
-        return this.context.campus().toList();
+        
+        try {
+            return context.campus().toList();
+        } catch (Exception e) {
+            log.log(Level.SEVERE, "nao foi possivel listar todos os campus", e);
+        }
+        
+        return null;
     }
 
     @Override
@@ -36,34 +36,26 @@ public class CampusDao implements Dao<Campus>{
     
     public List<Campus> findAllByInstituicaoId(int instId) {
         
-        return this.context.campus().where(c -> c.getFkInstituicao().getIdInstituicao()  == instId).toList();
+        try {
+            return context.campus().where(c -> c.getFkInstituicao().getIdInstituicao()  == instId).toList();
+        } catch (Exception e) {
+            log.log(Level.SEVERE, "nao foi possivel listar campus pela instituicao", e);
+        }
+        
+        return null;
     }
 
     @Override
     public Campus findOneById(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Campus save(Campus entity) {
         
-        EntityTransaction tx = context.em.getTransaction();
-        tx.begin();
         try {
-            context.em.persist(entity);
-            tx.commit();
-        } catch (IllegalStateException | TransactionRequiredException | QueryTimeoutException e) {
-
-            log.log(Level.SEVERE, "nao foi possivel cadastrar o campus", e);
-
-        } catch (PersistenceException e) {
-
-            ViolationLogger.log(e, log);
-
-            log.log(Level.SEVERE, "nao foi possivel cadastrar o campus", e);
+            Optional<Campus> campus = context.campus().where(c -> c.getIdCampus() == id).findOne();
+            return campus.orElse(null);
+        } catch (Exception e) {
+            log.log(Level.SEVERE, "nao foi possivel listar campus pelo id", e);
         }
         
-        return entity;
+        return null;
     }
 
     @Override

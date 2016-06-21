@@ -1,10 +1,18 @@
 package br.edu.ifrs.mostra.daos;
 
+import br.edu.ifrs.mostra.models.Area;
 import br.edu.ifrs.mostra.models.Autor;
 import br.edu.ifrs.mostra.models.AutorCurso;
 import br.edu.ifrs.mostra.models.Campus;
+import br.edu.ifrs.mostra.models.Categoria;
 import br.edu.ifrs.mostra.models.Curso;
 import br.edu.ifrs.mostra.models.Instituicao;
+import br.edu.ifrs.mostra.models.Modalidade;
+import br.edu.ifrs.mostra.models.Orientador;
+import br.edu.ifrs.mostra.models.OrientadorCampus;
+import br.edu.ifrs.mostra.models.Trabalho;
+import br.edu.ifrs.mostra.models.TrabalhoAutorCurso;
+import br.edu.ifrs.mostra.models.TrabalhoOrientadorCampus;
 import br.edu.ifrs.mostra.models.Usuario;
 import javax.inject.Inject;
 import org.jinq.jpa.JPAQueryLogger;
@@ -76,4 +84,35 @@ public class DBContext {
         return streams.streamAll(em, AutorCurso.class);
     }
     
+    protected JinqStream<Trabalho> trabalho() {
+        return streams.streamAll(em, Trabalho.class);           
+    }
+    
+    protected JinqStream<Area> area() {
+        return streams.streamAll(em, Area.class);
+    }
+    
+    protected JinqStream<Categoria> categoria() {
+        return streams.streamAll(em, Categoria.class);
+    }
+            
+    protected JinqStream<Modalidade> modalidade() {
+        return streams.streamAll(em, Modalidade.class);
+    }
+    
+    protected JinqStream<Orientador> orientador() {
+        return streams.streamAll(em, Orientador.class);
+    }
+    
+    protected JinqStream<OrientadorCampus> orientadorCampus() {
+        return streams.streamAll(em, OrientadorCampus.class);
+    }
+    
+    protected JinqStream<TrabalhoAutorCurso> trabalhoAutorCurso() {
+        return streams.streamAll(em, TrabalhoAutorCurso.class);
+    }
+    
+    protected JinqStream<TrabalhoOrientadorCampus> trabalhoOrientadorCampus() {
+        return streams.streamAll(em, TrabalhoOrientadorCampus.class);
+    }
 }

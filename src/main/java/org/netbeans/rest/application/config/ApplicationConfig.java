@@ -33,6 +33,7 @@ public class ApplicationConfig extends Application {
         resources.add(br.edu.ifrs.mostra.services.CursoBean.class);
         resources.add(br.edu.ifrs.mostra.services.HomeBean.class);
         resources.add(br.edu.ifrs.mostra.services.InstituicaoBean.class);
+        resources.add(br.edu.ifrs.mostra.services.TrabalhoBean.class);
         resources.add(org.eclipse.persistence.jpa.rs.exceptions.JPARSExceptionMapper.class);
         resources.add(org.eclipse.persistence.jpa.rs.resources.EntityResource.class);
         resources.add(org.eclipse.persistence.jpa.rs.resources.MetadataResource.class);

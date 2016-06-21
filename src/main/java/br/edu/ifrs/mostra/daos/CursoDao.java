@@ -6,15 +6,8 @@
 package br.edu.ifrs.mostra.daos;
 
 import br.edu.ifrs.mostra.models.Curso;
-import br.edu.ifrs.mostra.utils.ViolationLogger;
 import java.util.List;
 import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.persistence.EntityTransaction;
-import javax.persistence.PersistenceException;
-import javax.persistence.QueryTimeoutException;
-import javax.persistence.TransactionRequiredException;
-import javax.validation.ConstraintViolationException;
 
 /**
  *
@@ -22,17 +15,26 @@ import javax.validation.ConstraintViolationException;
  */
 public class CursoDao implements Dao<Curso> {
 
-    private final DBContext context = DBContext.getInstance();
-    private static final Logger log = Logger.getLogger(CursoDao.class.getName());
-
     @Override
     public List<Curso> listAll() {
-
-        return this.context.curso().toList();
+        try {
+            return context.curso().toList();
+        } catch (Exception e) {
+            log.log(Level.SEVERE, "nao foi possivel listar os cursos", e);
+        }
+        
+        return null;
     }
 
     public List<Curso> findAllByCampusId(int idCampus) {
-        return this.context.curso().where(c -> c.getFkCampus() == idCampus).toList();
+        
+        try {
+            return context.curso().where(c -> c.getFkCampus() == idCampus).toList();
+        } catch (Exception e) {
+            log.log(Level.SEVERE, "nao foi possivel listar os cursos pelo campus", e);
+        }
+        
+        return null;
     }
 
     @Override
@@ -43,36 +45,16 @@ public class CursoDao implements Dao<Curso> {
     @Override
     public Curso findOneById(int id) {
 
-        //try {
-            Curso curso = this.context.curso().where(c -> c.getIdCurso() == id).getOnlyValue();
+        try {
+            Curso curso = context.curso().where(c -> c.getIdCurso() == id).getOnlyValue();
 
             return curso;
 
-        //} 
+        } catch (Exception e) {
+            log.log(Level.SEVERE, "nao foi possivel encontrar o curso pelo id", e);
+        } 
 
-        //return null;
-    }
-
-    @Override
-    public Curso save(Curso entity) {
-        EntityTransaction tx = context.em.getTransaction();
-        tx.begin();
-
-        try {
-            this.context.em.persist(entity);
-            tx.commit();
-        } catch (IllegalStateException | TransactionRequiredException | QueryTimeoutException e) {
-            tx.rollback();
-            log.log(Level.SEVERE, "nao foi possivel cadastrar o curso", e);
-
-        } catch (PersistenceException e) {
-            tx.rollback();
-            ViolationLogger.log(e, log);
-
-            log.log(Level.SEVERE, "nao foi possivel cadastrar o curso", e);
-        }
-
-        return entity;
+        return null;
     }
 
     @Override

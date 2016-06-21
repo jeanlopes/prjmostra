@@ -10,7 +10,6 @@ import br.edu.ifrs.mostra.utils.ViolationLogger;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.persistence.PersistenceException;
 
 /**
@@ -18,14 +17,11 @@ import javax.persistence.PersistenceException;
  * @author jean
  */
 public class UsuarioDao implements Dao<Usuario> {
-
-    private final DBContext context = DBContext.getInstance();
-    private static final Logger log = Logger.getLogger(UsuarioDao.class.getName());
     
     public Usuario findUserByCpf (String cpf) {
         
         try {
-            Optional<Usuario> user = this.context.usuario().where(u -> u.getCpf().equals(cpf)).findOne();
+            Optional<Usuario> user = context.usuario().where(u -> u.getCpf().equals(cpf)).findOne();
             
             return user.orElse(null);
         } catch (Exception e) {
@@ -38,7 +34,7 @@ public class UsuarioDao implements Dao<Usuario> {
     public boolean hasUserByCPF(String cpf) {
         
         try {
-            Optional<Usuario> user = this.context.usuario().where(u -> u.getCpf().equals(cpf)).findOne();
+            Optional<Usuario> user = context.usuario().where(u -> u.getCpf().equals(cpf)).findOne();
             
             return user.isPresent();
             
@@ -69,7 +65,7 @@ public class UsuarioDao implements Dao<Usuario> {
         
         try {
         
-            this.context.em.persist(entity);
+            context.em.persist(entity);
         } catch (PersistenceException e) {
             
             ViolationLogger.log(e, log);

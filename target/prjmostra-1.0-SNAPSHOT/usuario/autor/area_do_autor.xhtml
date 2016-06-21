@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:head>
         <title>Área do Autor</title>
     </h:head>
@@ -11,6 +12,22 @@
             <h3>Bem vindo a área do autor</h3>
             <p><h:link outcome="/index" value="To Home Page" /></p>
             <p>
+                <h:dataTable value="#{autorController.trabalhos}" var="t">
+                    <h:column>
+                        <h:outputText value="#{t.titulo}" escape="false" />
+                    </h:column>
+                    
+                    <h:column>
+                        <h:outputText value="#{t.status}" converter="statusTrabConverter" />
+                    </h:column>
+                    
+                    <h:column>
+                        <a href="../../trabalho/trabalho.xhtml#/?id=#{t.idTrabalho}" >Ver/Editar</a>
+                    </h:column>
+                </h:dataTable>
+
+
+                <a href="../../trabalho/trabalho.xhtml" >Inscrever trabalho</a>
                 <h:form>
                     <h:commandLink action="#{loginBean.logout}" value="Logout" />
                 </h:form>

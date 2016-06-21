@@ -7,8 +7,26 @@ and open the template in the editor.
     Criado em : 02/10/2015, 10:29:58
     Author     : Marcus
 */
-
 @charset "UTF-8";
+
+.close {
+  font-size: 20px;
+  font-weight: bold;
+  line-height: 18px;
+  color: #000000;
+  text-shadow: 0 1px 0 #ffffff;
+  opacity: 0.2;
+  filter: alpha(opacity=20);
+  text-decoration: none;
+}
+.close:hover {
+  color: #000000;
+  text-decoration: none;
+  opacity: 0.4;
+  filter: alpha(opacity=40);
+  cursor: pointer;
+}
+
 .ifrs-shadow{
     /*box-shadow*/
     -webkit-box-shadow:0 0 10px rgba(0,51,0,.83);

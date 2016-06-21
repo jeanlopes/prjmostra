@@ -1,0 +1,157 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <ui:composition template="/shared/Layout.xhtml">
+        <ui:define name="body">
+            <h3>Inscrição de Trabalho</h3>
+            <script src="#{request.contextPath}/content/mostraapp.js"></script>
+            <script src="#{request.contextPath}/content/services/trabalhoService.js"></script> 
+            <script src="#{request.contextPath}/content/controllers/trabalhoController.js"></script>
+            <form ng-app="mostraApp" class="form-horizontal">
+
+                
+                <fieldset ng-controller="TrabalhoController">
+
+                    <!-- Form Name -->
+                    <legend>Trabalho</legend>
+
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="textinput">Título</label>  
+                        <div class="col-md-4">
+                            <input id="titulo" ng-model="trabalho.titulo" name="titulo" type="text" placeholder="Título" class="form-control input-md" required="" />
+                            <p class="help-block">Caracteres restantes: {{ caracteres_titulo - trabalho.titulo.length}}</p>
+                        </div>
+                    </div>
+
+                    <!-- Textarea -->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="Resumo">Resumo</label>
+                        <div class="col-md-4">                     
+                            <textarea class="form-control" ng-model="trabalho.resumo" id="resumo" name="resumo"></textarea>
+                            <p class="help-block">Caracteres restantes: {{ caracteres_resumo - trabalho.resumo.length}}</p>
+                        </div>
+                    </div>
+
+                    <!-- Appended Input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="coautor">Coautores</label>
+                        <div class="col-md-5">
+                            <div class="input-group">
+                                <input id="coautor" name="coautor" ng-keyup="buscarAutor(coautor)" ng-model="coautor" class="form-control" placeholder="coautores" type="text" />
+                                <div class="autocomplete">
+                                    <p class="link" ng-click="inserirAutor(autor_disponivel)"  ng-repeat="autor_disponivel in autores_disponiveis"><a>{{ autor_disponivel.nome}}, {{ autor_disponivel.nomeCurso}}</a></p>
+                                </div>
+                            </div>
+                            <p class="help-block">No máximo 4 coautores.</p>
+                            <ul id="autor-list">
+                                <li ng-repeat="autor in trabalho.autores" >
+                                    <div class="view">
+                                        <label>{{autor.nome}}, {{ autor.nomeCurso}} <a class="close" ng-click="removerAutor(autor)">×</a></label>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- Appended Input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="orientadores">Oriantadores</label>
+                        <div class="col-md-5">
+                            <div class="input-group">
+                                <input id="orientadores" ng-keyup="buscarOrientador(novoOrientador)" ng-model="novoOrientador" name="orientadores" class="form-control" placeholder="orientadores" type="text" />
+                                <div class="autocomplete">
+                                    <p class="link" ng-click="inserirOrientador(orientador_disponivel)"  ng-repeat="orientador_disponivel in orientadores_disponiveis"><a>{{ orientador_disponivel.nome}}, {{ orientador_disponivel.nomeCampus}}</a></p>
+                                </div>
+                            </div>
+                            <p class="help-block">No mínimo 1 orientador principal e opcionalmente apenas 1 coorientador</p>
+                            <ul id="orientador-list">
+                                <li ng-repeat="orientador in trabalho.orientadores" >
+                                    <div class="view">
+                                        <label>{{orientador.nome}}, {{ orientador.nomeCampus}} <a class="close" ng-click="removerOrientador(Orientador)">×</a></label>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- Select Basic -->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="area_tematica">Área temática</label>
+                        <div class="col-md-5">
+                            <select id="area_tematica" ng-options="a.nome for a in areas_tematicas track by a.idArea" ng-model="trabalho.area_tematica" name="trabalho.area_tematica" class="form-control"> 
+                                <option value="">Selecione</option>
+                            </select>                           
+                        </div>
+                    </div>
+                    
+                    <!-- Select Basic -->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="categoria">Categoria</label>
+                        <div class="col-md-5">
+                            <select id="categoria" ng-options="c.nome for c in categorias track by c.idCategoria" ng-model="trabalho.categoria" name="categoria" class="form-control">
+                                <option value="">Selecione</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Select Basic -->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="modalidade">Modalidade</label>
+                        <div class="col-md-5">
+                            <select id="modalidade" ng-options="m.nome for m in modalidades track by m.idModalidade" ng-model="trabalho.modalidade" name="modalidade" class="form-control">
+                                <option value="">Selecione</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Select Basic -->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="nivel">Nível</label>
+                        <div class="col-md-4">
+                            <select id="nivel" ng-options="n.nome for n in niveis track by n.idNivel" ng-model="trabalho.nivel" name="nivel" class="form-control">
+                                <option value="">Selecione</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <!-- Appended Input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="palavras_chave">Palavras-chave</label>
+                        <div class="col-md-4">
+                            <div class="input-group">
+                                <input id="palavras_chave" ng-model="palavra_chave" name="palavras_chave" class="form-control" placeholder="palavras-chave" type="text" />
+                                <span ng-click="adicionarPalavraChave(palavra_chave)" class="input-group-addon"><a>adicionar</a></span>
+                            </div>
+                            <ul id="palavra-chave-list">
+                                <li ng-repeat="palavra in trabalho.palavras_chave" >
+                                    <div class="view">
+                                        <label>{{palavra}}</label>
+                                        <a class="close" ng-click="removerPalavraChave(palavra)">×</a>
+                                    </div>
+                                </li>
+                            </ul>
+                            <p class="help-block">no máximo 3</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Button -->
+                    <div class="form-group">
+                        <div class="col-md-4">
+                            <button id="enviar" name="enviar" ng-click="enviarTrabalho()" class="btn btn-primary">Enviar</button>
+                        </div>
+                    </div>
+
+                </fieldset>
+                
+            </form>
+
+
+        </ui:define>
+    </ui:composition>
+
+
+</html>

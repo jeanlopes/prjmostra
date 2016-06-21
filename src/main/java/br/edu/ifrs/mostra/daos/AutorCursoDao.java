@@ -10,17 +10,29 @@ import br.edu.ifrs.mostra.utils.ViolationLogger;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.persistence.PersistenceException;
+import javax.persistence.Query;
+import org.jinq.jpa.JPQL;
+import org.jinq.orm.stream.JinqStream;
 
 /**
  *
  * @author jean
  */
 public class AutorCursoDao implements Dao<AutorCurso> {
-
-    private static final Logger log = Logger.getLogger(AutorCursoDao.class.getName());
-    private final DBContext context = DBContext.getInstance();
+    
+    public List<AutorCurso> findByAutorName(String name) {
+        
+        try {
+            
+            List<AutorCurso> autoresCursos = context.autorCurso().where(ac -> JPQL.like(ac.getAutor().getUsuario().getNome(),"%" +  name + "%")).toList();
+            return autoresCursos;
+        } catch (Exception e) {
+            log.log(Level.SEVERE, "nao foi possivel buscar o autorCurso pelo nome do autor", e);
+        }
+        
+        return null;
+    }
     
     @Override
     public List<AutorCurso> listAll() {
@@ -36,7 +48,7 @@ public class AutorCursoDao implements Dao<AutorCurso> {
         
         try {
             
-            Optional<AutorCurso> autorCurso = this.context.autorCurso()
+            Optional<AutorCurso> autorCurso = context.autorCurso()
                     .where(ac -> ac.getAutorCursoPK().getFkAutor() == idAutor 
                             && ac.getAutorCursoPK().getFkCurso() == idCurso  )
                     .findOne();
@@ -58,7 +70,7 @@ public class AutorCursoDao implements Dao<AutorCurso> {
     
     public int getMaxSeq(int idAutor) {
         
-        String seq = this.context.autorCurso().where(ac -> ac.getAutor().getUsuario().getIdUsuario() == idAutor).max(ac -> ac.getSeq());
+        String seq = context.autorCurso().where(ac -> ac.getAutor().getUsuario().getIdUsuario() == idAutor).max(ac -> ac.getSeq());
         
         return Integer.parseInt(seq);
     }

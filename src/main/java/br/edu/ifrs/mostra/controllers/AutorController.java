@@ -7,10 +7,12 @@ package br.edu.ifrs.mostra.controllers;
 
 import br.edu.ifrs.mostra.models.Autor;
 import br.edu.ifrs.mostra.models.Instituicao;
+import br.edu.ifrs.mostra.models.Trabalho;
 import br.edu.ifrs.mostra.models.Usuario;
 import br.edu.ifrs.mostra.services.AutorBean;
 import br.edu.ifrs.mostra.services.InstituicaoBean;
 import br.edu.ifrs.mostra.services.LoginBean;
+import br.edu.ifrs.mostra.services.TrabalhoBean;
 import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
@@ -38,8 +40,13 @@ public class AutorController extends UsuarioController {
 
     @EJB
     private LoginBean loginBean;
+    
+    @EJB
+    private TrabalhoBean trabalhoBean;
 
     private List<Instituicao> instituicoes;
+    
+    private List<Trabalho> trabalhos;
 
     private int idInstituicao;
 
@@ -55,9 +62,22 @@ public class AutorController extends UsuarioController {
     @PostConstruct
     public void init() {
         List<Instituicao> inst = this.instituicaoBean.listAll();
-
+        
         this.setInstituicoes(inst);
+        
+        List<Trabalho> trabs = this.trabalhoBean.listarTrabalhoPeloAutor();
+        this.setTrabalhos(trabs);
     }
+
+    public List<Trabalho> getTrabalhos() {
+        return trabalhos;
+    }
+
+    public void setTrabalhos(List<Trabalho> trabalhos) {
+        this.trabalhos = trabalhos;
+    }
+    
+    
    
     public int getIdCurso() {
         return idCurso;
@@ -142,7 +162,7 @@ public class AutorController extends UsuarioController {
                 if (this.autorBean.isCurrentUserAutor()) {
                     context.addMessage("Aviso", new FacesMessage("Usuário já cadastrado como autor"));
 
-                    context.getExternalContext().redirect("/autor/areaDoAutor.xhtml");
+                    context.getExternalContext().redirect("/autor/area_do_autor.xhtml");
                 } else {
                     context.getExternalContext().redirect("usuario/autor/inscricao_incremental.xhtml");
                 }

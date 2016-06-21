@@ -25,7 +25,6 @@ public class PapelFilter implements Filter {
     // this value is null, this filter instance is not currently
     // configured. 
     //private FilterConfig filterConfig = null;
-
     public PapelFilter() {
     }
 
@@ -45,7 +44,7 @@ public class PapelFilter implements Filter {
 
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
-        
+
         if (request.getUserPrincipal() != null) { //If user is already authenticated
             String navigateString = "";
             if (request.isUserInRole("autor")) {
@@ -54,22 +53,21 @@ public class PapelFilter implements Filter {
                 navigateString = "/faces/usuario/orientador/area_do_orientador.xhtml";
             }
 
-                response.sendRedirect(request.getContextPath() + navigateString);
-            } else {
-                chain.doFilter(servletRequest, servletResponse);
-            }
-        
+            response.sendRedirect(request.getContextPath() + navigateString);
+        } else {
+            chain.doFilter(servletRequest, servletResponse);
+        }
 
     }
 
     @Override
     public void init(FilterConfig fc) throws ServletException {
-        
+
     }
 
     @Override
     public void destroy() {
-        
+
     }
 
 }

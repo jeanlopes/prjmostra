@@ -6,16 +6,10 @@
 package br.edu.ifrs.mostra.daos;
 
 import br.edu.ifrs.mostra.models.Instituicao;
-import br.edu.ifrs.mostra.utils.ViolationLogger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.persistence.EntityTransaction;
-import javax.persistence.PersistenceException;
-import javax.persistence.QueryTimeoutException;
-import javax.persistence.TransactionRequiredException;
 
 /**
  *
@@ -23,8 +17,6 @@ import javax.persistence.TransactionRequiredException;
  */
 public class InstituicaoDao implements Dao<Instituicao> {
 
-    private final DBContext context = DBContext.getInstance();
-    private static final Logger log = Logger.getLogger(InstituicaoDao.class.getName());
 
     @Override
     public List<Instituicao> listAll() {
@@ -48,27 +40,6 @@ public class InstituicaoDao implements Dao<Instituicao> {
        Optional<Instituicao> inst = context.instituicao().where(i -> i.getIdInstituicao() == id).findOne();
        
        return inst.orElse(null);
-    }
-
-    @Override
-    public Instituicao save(Instituicao entity) {
-        EntityTransaction tx = context.em.getTransaction();
-        tx.begin();
-        try {
-            context.em.persist(entity);
-            tx.commit();
-            return entity;
-        } catch (IllegalStateException | TransactionRequiredException | QueryTimeoutException e) {
-
-            log.log(Level.SEVERE, "nao foi possivel cadastrar a instituicao", e);
-
-        } catch (PersistenceException e) {
-
-            ViolationLogger.log(e, log);
-            log.log(Level.SEVERE, "nao foi possivel cadastrar a instituicao", e);
-        }
-        
-        return null;
     }
 
     @Override
